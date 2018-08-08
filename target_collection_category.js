@@ -6,6 +6,7 @@ const fs = require('fs');
 
 gplay.list({
   category: gplay.category.BUSINESS, // set category 
+  collection: gplay.collection.TOP_FREE, // set collection
   num: 10, // set number to get
 }).then(writeCSV, console.log);
 
@@ -16,7 +17,7 @@ function writeCSV(res) {
 
   try {
     const csv = json2csv(res, { header });
-    fs.appendFile("target_category_" + formatterd + ".csv", csv);
+    fs.appendFile("target_category_collection_" + formatterd + ".csv", csv);
   } catch (err) {
     console.error(err);
   }

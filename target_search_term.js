@@ -11,10 +11,12 @@ gplay.search({
 
 function writeCSV(res) {
   var header = Object.keys(res[0]).join();
+  var dt = new Date();
+  var formatted = dt.toFormat("YYYYMMDDHH24MISS");
 
   try {
     const csv = json2csv(res, { header });
-    fs.appendFile("target_search_term.csv", csv);
+    fs.appendFile("target_search_term_" + formatted + ".csv", csv);
   } catch (err) {
     console.error(err);
   }

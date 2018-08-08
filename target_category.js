@@ -11,10 +11,12 @@ gplay.list({
 
 function writeCSV(res) {
   var header = Object.keys(res[0]).join();
+  var dt = new Date();
+  var formatted = dt.toFormat("YYYYMMDDHH24MISS");
 
   try {
     const csv = json2csv(res, { header });
-    fs.appendFile("target_category.csv", csv);
+    fs.appendFile("target_category_" + formatterd + ".csv", csv);
   } catch (err) {
     console.error(err);
   }

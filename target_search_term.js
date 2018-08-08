@@ -3,6 +3,7 @@
 const gplay = require('google-play-scraper');
 const json2csv = require('json2csv').parse;
 const fs = require('fs');
+require('date-utils');
 
 gplay.search({
   term: "panda",

@@ -12,12 +12,10 @@ gplay.list({
 function writeCSV(res) {
   var header = Object.keys(res[0]).join();
 
-  for (var i = 0; i < res.length; i++) {
-    try {
-      const csv = json2csv(res[i], { header });
-      fs.appendFile("target_category.csv", csv);
-    } catch (err) {
-      console.error(err);
-    }
+  try {
+    const csv = json2csv(res, { header });
+    fs.appendFile("target_category.csv", csv);
+  } catch (err) {
+    console.error(err);
   }
 }

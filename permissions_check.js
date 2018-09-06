@@ -11,7 +11,10 @@ if (process.argv.length <= 2) {
   process.exit(1);
 }
 
+var errorFile = "error.log"
+var outputFile = "locationAppList.csv"
 var appListFile = process.argv[2];
+var count = 0;
 
 var stream = fs.createReadStream(appListFile, "utf8");
 var reader = readline.createInterface({ input: stream });
@@ -20,21 +23,24 @@ reader.on("line", (data) => {
     gplay.permissions({
       appId: data,
       throttle: 2,
-    }).then(checkLocation, errorWrite);
+    }).then(checkLocation, console.log);
   }
 });
 
 function checkLocation(res) {
+  count++;
+  console.log(count);
   for (var i = 0; i < res.permissions.length; i++) {
     if (res.permissions[i].permission.match(/location/)) {
-      console.log(res.appId);
-      return;
+      fs.appendFile(outputFile, res.appId + "\n", fileError);
+      return false;
     }
   }
 }
 
-var errorFile = "error.log"
-function errorWrite(error) {
-  fs.appendFile(errorFile, error, (err) => { return false; });
-  fs.appendFile(errorFile, "\n", (err) => { return false; });
+function fileError(err) {
+  if (err) {
+    console.log(err);
+  }
+  return false;
 }
